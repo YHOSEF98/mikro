@@ -1,5 +1,5 @@
 from typing import Any
-from .utils import create_queue, eliminar_queue, editar_queue
+from .utils import create_queue, eliminar_queue, editar_queue, crear_regla_corte
 from django import http
 from django.http import HttpRequest, HttpResponse, JsonResponse
 from django.shortcuts import render
@@ -24,6 +24,25 @@ class MikrotikListView(ListView):
         context["upfooter"] = "Servidores"
 
         return context
+
+class MikrotikDetailView(ListView):
+    model = Mikrotik
+    template_name = 'mikrotik/detailmikro.html'
+    context_object_name = 'mikrotik'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = "detalle del servidor Mikrotik"
+        context["upfooter"] = "Mikrotik"
+        return context
+    
+    def aplicar_reglas_de_corte(self):
+        mikrotik = self.get.object()
+        host = mikrotik.ip
+        username = mikrotik.usuario
+        password = mikrotik.contraseña
+        port = mikrotik.puertoapi
+        crear_regla_corte(host, username, password, port)
 
 class ServiciosListView(ListView):
     model = servicio
