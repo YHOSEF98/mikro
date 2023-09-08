@@ -25,6 +25,21 @@ class MikrotikListView(ListView):
 
         return context
 
+class MikrotikCreateView(CreateView):
+    model = Mikrotik
+    form_class = MikrotikForm
+    template_name = 'mikrotik/createform.html'
+    success_url = reverse_lazy('mikrotiks')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = "Crear Servidor Mikrotik"
+        context["upfooter"] = "Servidor"
+        context["action"] = "add"
+        context["success_url"] = reverse_lazy('mikrotiks')
+        context["boton_create"] = " Crear Mikrotik"
+        return context
+
 class MikrotikDetailView(DetailView):
     model = Mikrotik
     template_name = 'mikrotik/detailmikro.html'

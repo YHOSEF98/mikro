@@ -5,6 +5,7 @@ from .views import *
 urlpatterns = [
     # path("admin/", admin.site.urls),
     path("servidores/", MikrotikListView.as_view(), name="mikrotiks"),
+    path("servidores/add", MikrotikCreateView.as_view(), name="mikrotiksadd"),
     path("servidores/detail/<int:pk>", MikrotikDetailView.as_view(), name="detailmikro"),
     path("servidores/reglascorte/<int:pk>", MikrotikreglasView.as_view(), name="reglas-corte"),
     path("servicios", ServiciosListView.as_view(), name="servicios"),
