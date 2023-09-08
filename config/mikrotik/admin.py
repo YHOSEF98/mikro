@@ -14,3 +14,6 @@ class servicioAdmin(admin.ModelAdmin):
     list_display = ('cli', 'ip', 'mikro')
     search_fields = ('cli', 'ip', 'mikro')
     list_filter = ('cli', 'ip', 'mikro',)
+
+admin.site.register(grupoCorte)
+admin.site.register(planVelocidad)

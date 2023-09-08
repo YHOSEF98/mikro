@@ -1,6 +1,7 @@
 from django.db import models
 from clientes.models import Cliente
 from django.forms.models import model_to_dict
+from .choices import *
 
 # Create your models here.
 class Mikrotik(models.Model):
@@ -38,3 +39,22 @@ class servicio(models.Model):
     
     def tojson(self):
         return self.model_to_dict(self)
+    
+class grupoCorte(models.Model):
+    nombre = models.CharField(max_length=50)
+    afacturar = models.IntegerField(choices=dia_choices, default=0)
+    apagar = models.IntegerField(choices=dia_choices, default=0)
+    acortar = models.IntegerField(choices=dia_choices, default=0)
+    hora = models.TimeField(default='12:00am')
+
+    def __str__(self):
+        return f'{self.nombre}'
+    
+class planVelocidad(models.Model):
+    nombre = models.CharField(max_length=50)
+    precio = models.IntegerField()
+    velociadad = models.CharField(max_length=9)
+    tipo = models.CharField(max_length=1, choices=tipoPlan, default='R')
+
+    def __str__(self):
+        return f'{self.nombre}'
