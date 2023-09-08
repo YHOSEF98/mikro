@@ -1,0 +1,11 @@
+{% extends 'inventario/base.html' %}
+
+{% block 'content' %}
+<h1>¿Deseas aplicar las reglas para la Mikrotik {{mikrotik.nombre}}?</h1>
+
+<form method="post" action="{% url 'reglas-corte' mikrotik.id %}">
+    {% csrf_token %}
+    <button type="submit">Sí</button>
+    <a href="{% url 'detailmikro' mikrotik.id %}">No</a>
+</form>
+{% endblock  %}

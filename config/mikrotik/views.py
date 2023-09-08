@@ -1,12 +1,12 @@
 from typing import Any
 from .utils import create_queue, eliminar_queue, editar_queue, crear_regla_corte
 from django import http
-from django.http import HttpRequest, HttpResponse, JsonResponse
+from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.shortcuts import render
 from .models import *
 from .forms import *
-from django.urls import reverse_lazy
-from django.views.generic import ListView, DetailView, DeleteView, CreateView, UpdateView
+from django.urls import reverse_lazy, reverse
+from django.views.generic import ListView, View, DetailView, DeleteView, CreateView, UpdateView
 
 # Create your views here.
 def listar_productos(request):
@@ -25,24 +25,37 @@ class MikrotikListView(ListView):
 
         return context
 
-class MikrotikDetailView(ListView):
+class MikrotikDetailView(DetailView):
     model = Mikrotik
     template_name = 'mikrotik/detailmikro.html'
-    context_object_name = 'mikrotik'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context["object"] = self.get_object()
         context["title"] = "detalle del servidor Mikrotik"
         context["upfooter"] = "Mikrotik"
         return context
     
-    def aplicar_reglas_de_corte(self):
-        mikrotik = self.get.object()
+
+class MikrotikreglasView(DetailView):
+    template_name = 'mikrotik/reglasmikro.html'
+    model = Mikrotik
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["object"] = self.get_object()
+        context["title"] = "detalle del servidor Mikrotik"
+        context["upfooter"] = "Mikrotik"
+        return context
+
+    def post(self, request, *args, **kwargs):
+        mikrotik = self.get_object()
         host = mikrotik.ip
         username = mikrotik.usuario
         password = mikrotik.contraseña
         port = mikrotik.puertoapi
         crear_regla_corte(host, username, password, port)
+        return HttpResponseRedirect(reverse('detailmikro', kwargs={'pk': kwargs['pk']}))
 
 class ServiciosListView(ListView):
     model = servicio
