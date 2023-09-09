@@ -15,16 +15,18 @@ class Mikrotik(models.Model):
     usuario = models.CharField(max_length=60)
     contraseña = models.CharField(max_length=50)
 
-    def __str__(self):
-        return f'{self.nombre}'
+    class Meta:
+        verbose_name = 'Mikrotik'
+        verbose_name_plural = 'Servidores mikrotik'
 
 
 class Segmentos(models.Model):
     mikro = models.ForeignKey(Mikrotik, on_delete=models.CASCADE)
     segmento = models.CharField(max_length=18)
 
-    def __str__(self):
-        return f'{self.segmento} - {self.mikro}'
+    class Meta:
+        verbose_name = 'Segmento'
+        verbose_name_plural = 'Segmentos de red'
 
 
 class servicio(models.Model):
@@ -34,8 +36,9 @@ class servicio(models.Model):
     ip = models.CharField(max_length=15)
     max_limit = models.CharField(max_length=12)
 
-    def __str__(self):
-        return f'{self.ip} - {self.cli}'
+    class Meta:
+        verbose_name = 'Servicio'
+        verbose_name_plural = 'Servicios'
     
     def tojson(self):
         return self.model_to_dict(self)
@@ -47,8 +50,9 @@ class grupoCorte(models.Model):
     acortar = models.IntegerField(choices=dia_choices, default=0)
     hora = models.TimeField(default='12:00am')
 
-    def __str__(self):
-        return f'{self.nombre}'
+    class Meta:
+        verbose_name = 'Grupo de corte'
+        verbose_name_plural = 'Grupos de corte'
     
 class planVelocidad(models.Model):
     nombre = models.CharField(max_length=50)
@@ -56,5 +60,6 @@ class planVelocidad(models.Model):
     velociadad = models.CharField(max_length=9)
     tipo = models.CharField(max_length=1, choices=tipoPlan, default='R')
 
-    def __str__(self):
-        return f'{self.nombre}'
+    class Meta:
+        verbose_name = 'Plan de Velocidad'
+        verbose_name_plural = 'Planes de Velocidad'

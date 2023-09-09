@@ -93,6 +93,7 @@ class ServicioCreateView(CreateView):
         context = super().get_context_data(**kwargs)
         context["title"] = "Crear servicio"
         context["upfooter"] = "Servicios"
+        context["boton_create"] = " Crear servicio"
         context["action"] = "add"
         return context
     
