@@ -3,7 +3,10 @@ import ssl
 import routeros_api
 
 
-def create_queue(host, username, password, port, queue_name, target_ip, max_limit):
+def create_queue(host, username, password, 
+                 port, queue_name, target_ip, 
+                 max_limit
+                 ):
     try:
         connection = routeros_api.RouterOsApiPool(
             host=host,

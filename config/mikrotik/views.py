@@ -100,6 +100,7 @@ class ServicioCreateView(CreateView):
     def form_valid(self, form):
         if form.is_valid():
             mikro_instance = form.cleaned_data['mikro']
+            service_instance = form.cleaned_data['planVelocidad']
             host = mikro_instance.ip
             username = mikro_instance.usuario
             password = mikro_instance.contraseña

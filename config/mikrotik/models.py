@@ -1,3 +1,4 @@
+from typing import Any
 from django.db import models
 from clientes.models import Cliente
 from django.forms.models import model_to_dict
@@ -15,6 +16,9 @@ class Mikrotik(models.Model):
     usuario = models.CharField(max_length=60)
     contraseña = models.CharField(max_length=50)
 
+    def __str__(self):
+        return f'{self.nombre} - {self.ip}'
+
     class Meta:
         verbose_name = 'Mikrotik'
         verbose_name_plural = 'Servidores mikrotik'
@@ -27,6 +31,41 @@ class Segmentos(models.Model):
     class Meta:
         verbose_name = 'Segmento'
         verbose_name_plural = 'Segmentos de red'
+
+    
+class grupoCorte(models.Model):
+    nombre = models.CharField(max_length=50)
+    afacturar = models.IntegerField(choices=dia_choices)
+    apagar = models.IntegerField(choices=dia_choices)
+    acortar = models.IntegerField(choices=dia_choices)
+    hora = models.TimeField(default='23:59:59')
+
+    class Meta:
+        verbose_name = 'Grupo de corte'
+        verbose_name_plural = 'Grupos de corte'
+
+        def __str__(self):
+            return f'{self.nombre}'
+    
+class planVelocidad(models.Model):
+    nombre = models.CharField(max_length=50)
+    precio = models.IntegerField()
+    velociadad = models.CharField(max_length=9)
+    tipo = models.CharField(max_length=1, choices=tipoPlan, default='R')
+    burst_limit = models.CharField(max_length=7, default='0/0')
+    limit_at = models.CharField(max_length=7, default='0/0')
+    burst_threshold = models.CharField(max_length=13, default='0/0')
+    burst_time = models.CharField(max_length=5, default='0/0')
+    priority = models.CharField(max_length=3, default='8/8')
+
+    class Meta:
+        verbose_name = 'Plan de Velocidad'
+        verbose_name_plural = 'Planes de Velocidad'
+
+    def __str__(self):
+            return f'{self.nombre}'
+    
+
 
 
 class servicio(models.Model):
@@ -43,23 +82,5 @@ class servicio(models.Model):
     def tojson(self):
         return self.model_to_dict(self)
     
-class grupoCorte(models.Model):
-    nombre = models.CharField(max_length=50)
-    afacturar = models.IntegerField(choices=dia_choices, default=0)
-    apagar = models.IntegerField(choices=dia_choices, default=0)
-    acortar = models.IntegerField(choices=dia_choices, default=0)
-    hora = models.TimeField(default='12:00am')
-
-    class Meta:
-        verbose_name = 'Grupo de corte'
-        verbose_name_plural = 'Grupos de corte'
-    
-class planVelocidad(models.Model):
-    nombre = models.CharField(max_length=50)
-    precio = models.IntegerField()
-    velociadad = models.CharField(max_length=9)
-    tipo = models.CharField(max_length=1, choices=tipoPlan, default='R')
-
-    class Meta:
-        verbose_name = 'Plan de Velocidad'
-        verbose_name_plural = 'Planes de Velocidad'
+    def __str__(self):
+        return f'{self.cli} - {self.mikro}'
