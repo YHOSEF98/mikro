@@ -35,22 +35,22 @@ class Segmentos(models.Model):
     
 class grupoCorte(models.Model):
     nombre = models.CharField(max_length=50)
-    afacturar = models.IntegerField(choices=dia_choices)
-    apagar = models.IntegerField(choices=dia_choices)
-    acortar = models.IntegerField(choices=dia_choices)
+    afacturar = models.CharField(max_length=2, choices=dia_choices)
+    apagar = models.CharField(max_length=2, choices=dia_choices)
+    acortar = models.CharField(max_length=2, choices=dia_choices)
     hora = models.TimeField(default='23:59:59')
 
     class Meta:
         verbose_name = 'Grupo de corte'
         verbose_name_plural = 'Grupos de corte'
 
-        def __str__(self):
-            return f'{self.nombre}'
+    def __str__(self):
+            return f'{self.nombre} - {self.acortar}'
     
 class planVelocidad(models.Model):
     nombre = models.CharField(max_length=50)
     precio = models.IntegerField()
-    velociadad = models.CharField(max_length=9)
+    velocidad = models.CharField(max_length=9)
     tipo = models.CharField(max_length=1, choices=tipoPlan, default='R')
     burst_limit = models.CharField(max_length=7, default='0/0')
     limit_at = models.CharField(max_length=7, default='0/0')
@@ -63,7 +63,7 @@ class planVelocidad(models.Model):
         verbose_name_plural = 'Planes de Velocidad'
 
     def __str__(self):
-            return f'{self.nombre}'
+            return f'{self.nombre} - {self.velocidad}'
     
 
 
@@ -73,7 +73,7 @@ class servicio(models.Model):
     mikro = models.ForeignKey(Mikrotik, on_delete=models.CASCADE)
     nombre = models.CharField(max_length=50, blank=True)
     ip = models.CharField(max_length=15)
-    max_limit = models.CharField(max_length=12)
+    plan = models.ForeignKey(planVelocidad, on_delete=models.CASCADE)
 
     class Meta:
         verbose_name = 'Servicio'

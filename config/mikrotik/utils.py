@@ -1,11 +1,20 @@
 #from .models import *
 import ssl
 import routeros_api
-
+        # nombre = models.CharField(max_length=50)
+        # precio = models.IntegerField()
+        # velociadad = models.CharField(max_length=9)
+        # tipo = models.CharField(max_length=1, choices=tipoPlan, default='R')
+        # burst_limit = models.CharField(max_length=7, default='0/0')
+        # limit_at = models.CharField(max_length=7, default='0/0')
+        # burst_threshold = models.CharField(max_length=13, default='0/0')
+        # burst_time = models.CharField(max_length=5, default='0/0')
+        # priority = models.CharField(max_length=3, default='8/8')
 
 def create_queue(host, username, password, 
                  port, queue_name, target_ip, 
-                 max_limit
+                 max_limit, burst_limit, limit_at,
+                burst_threshold, burst_time, priority
                  ):
     try:
         connection = routeros_api.RouterOsApiPool(
@@ -27,6 +36,11 @@ def create_queue(host, username, password,
             'name': queue_name,
             'target': target_ip,
             'max-limit': max_limit,
+            'burst-limit': burst_limit,
+            'limit-at': limit_at,
+            'burst-threshold': burst_threshold,
+            'burst-time': burst_time,
+            'priority': priority
         }
 
         # Obtener el recurso de colas

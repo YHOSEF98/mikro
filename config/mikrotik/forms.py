@@ -9,13 +9,15 @@ class ServicioForm(forms.ModelForm):
 
     class Meta:
         model = servicio
-        fields = ['cli', 'mikro', 'nombre', 'ip', 'max_limit']
+        fields = ['cli', 'mikro', 'nombre', 'ip', 'plan']
 
         labels = {
             'cli': 'Cliente',  # Cambiar el nombre del campo
             'mikro': 'Mikrotik',
             'ip': 'Servicio Ip',
+            'plan': 'Plan de velocidad',
         }
+        
 class MikrotikForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

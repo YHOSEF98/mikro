@@ -100,16 +100,26 @@ class ServicioCreateView(CreateView):
     def form_valid(self, form):
         if form.is_valid():
             mikro_instance = form.cleaned_data['mikro']
-            service_instance = form.cleaned_data['planVelocidad']
+            plan_instance = form.cleaned_data['plan']
             host = mikro_instance.ip
             username = mikro_instance.usuario
             password = mikro_instance.contraseña
             port = mikro_instance.puertoapi
             queue_name = form.cleaned_data['nombre']
             target_ip = form.cleaned_data['ip']
-            max_limit = form.cleaned_data['max_limit']
+            max_limit = plan_instance.velocidad
+            burst_limit = plan_instance.burst_limit
+            limit_at = plan_instance.limit_at
+            burst_threshold = plan_instance.burst_threshold
+            burst_time = plan_instance.burst_time
+            priority = plan_instance.priority
 
-            create_queue(host, username, password, port, queue_name, target_ip, max_limit)
+
+            create_queue(host, username, password, 
+                 port, queue_name, target_ip, 
+                 max_limit, burst_limit, limit_at,
+                burst_threshold, burst_time, priority
+                 )
 
             return super().form_valid(form)
         
