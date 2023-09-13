@@ -12,4 +12,5 @@ urlpatterns = [
     path("servicio/add", ServicioCreateView.as_view(), name="servicioadd"),
     path('servicio/delete/<int:pk>/', ServicioDeleteView.as_view(), name='eliminar_servicio'),
     path('servicio/edit/<int:pk>/', ServicioUpdateView.as_view(), name='editar_servicio'),
+    path("planes/add", plnesCreateView.as_view(), name="planesadd"),
 ]

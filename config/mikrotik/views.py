@@ -35,7 +35,6 @@ class MikrotikCreateView(CreateView):
         context = super().get_context_data(**kwargs)
         context["title"] = "Crear Servidor Mikrotik"
         context["upfooter"] = "Servidor"
-        context["action"] = "add"
         context["success_url"] = reverse_lazy('mikrotiks')
         context["boton_create"] = " Crear Mikrotik"
         return context
@@ -179,4 +178,17 @@ class ServicioUpdateView(UpdateView):
             else:
                 return HttpResponse("No se pudo actualizar la cola")
     
-    
+
+class plnesCreateView(CreateView):
+    model = planVelocidad
+    form_class = planVelocidadForm
+    template_name = 'mikrotik/createform.html'
+    success_url = reverse_lazy('mikrotiks')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = "Crear Servidor Mikrotik"
+        context["upfooter"] = "Servidor"
+        context["success_url"] = reverse_lazy('mikrotiks')
+        context["boton_create"] = " Crear Mikrotik"
+        return context
