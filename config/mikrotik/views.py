@@ -114,12 +114,7 @@ class ServicioCreateView(CreateView):
             burst_time = plan_instance.burst_time
             priority = plan_instance.priority
 
-
-            create_queue(host, username, password, 
-                 port, queue_name, target_ip, 
-                 max_limit, burst_limit, limit_at,
-                burst_threshold, burst_time, priority
-                 )
+            create_queue(host, username, password, port, queue_name, target_ip, max_limit, burst_limit, limit_at, burst_threshold, burst_time, priority)
 
             return super().form_valid(form)
         
