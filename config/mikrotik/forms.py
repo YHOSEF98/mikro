@@ -61,14 +61,3 @@ class planVelocidadForm(forms.ModelForm):
             'burst_time': 'Burst time',
             'priority': 'Priority',
         }
-
-
-    nombre = models.CharField(max_length=50)
-    precio = models.IntegerField()
-    velocidad = models.CharField(max_length=9)
-    tipo = models.CharField(max_length=1, choices=tipoPlan, default='R')
-    burst_limit = models.CharField(max_length=7, default='0/0')
-    limit_at = models.CharField(max_length=7, default='0/0')
-    burst_threshold = models.CharField(max_length=13, default='0/0')
-    burst_time = models.CharField(max_length=5, default='0/0')
-    priority = models.CharField(max_length=3, default='8/8')

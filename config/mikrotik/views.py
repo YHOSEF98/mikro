@@ -113,7 +113,11 @@ class ServicioCreateView(CreateView):
             burst_time = plan_instance.burst_time
             priority = plan_instance.priority
 
-            create_queue(host, username, password, port, queue_name, target_ip, max_limit, burst_limit, limit_at, burst_threshold, burst_time, priority)
+            create_queue(host, username, password,
+                 port, queue_name, target_ip, 
+                 max_limit, burst_limit, limit_at,
+                burst_threshold, burst_time, priority
+                 )
 
             return super().form_valid(form)
         
@@ -179,7 +183,7 @@ class ServicioUpdateView(UpdateView):
                 return HttpResponse("No se pudo actualizar la cola")
     
 
-class plnesCreateView(CreateView):
+class planCreateView(CreateView):
     model = planVelocidad
     form_class = planVelocidadForm
     template_name = 'mikrotik/createform.html'
@@ -188,7 +192,8 @@ class plnesCreateView(CreateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["title"] = "Crear Servidor Mikrotik"
+        context["action"] = "add"
         context["upfooter"] = "Servidor"
         context["success_url"] = reverse_lazy('mikrotiks')
-        context["boton_create"] = " Crear Mikrotik"
+        context["boton_create"] = " Crear Plan"
         return context

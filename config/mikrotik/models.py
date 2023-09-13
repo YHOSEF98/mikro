@@ -55,7 +55,7 @@ class planVelocidad(models.Model):
     burst_limit = models.CharField(max_length=7, default='0/0')
     limit_at = models.CharField(max_length=7, default='0/0')
     burst_threshold = models.CharField(max_length=13, default='0/0')
-    burst_time = models.CharField(max_length=5, default='0/0')
+    burst_time = models.CharField(max_length=5, default='0s/0s')
     priority = models.CharField(max_length=3, default='8/8')
 
     class Meta:
